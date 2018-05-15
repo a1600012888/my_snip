@@ -1,3 +1,8 @@
+'''
+Mainly copied from other's
+'''
+
+
 import PIL
 import scipy.misc
 from io import BytesIO
