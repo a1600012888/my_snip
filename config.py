@@ -2,7 +2,8 @@
 import numpy as np
 from typing import Tuple, List, Dict
 from abc import abstractmethod, abstractproperty, ABCMeta
-
+import os
+import json
 class MultiStageLearningRatePolicy(object):
     '''
 
@@ -54,6 +55,19 @@ class Config(object):
     @abstractmethod
     def create_oprimizer(self):
         pass
+
+def save_args(args, save_dir = None):
+    if save_dir == None:
+        param_path = os.path.join(args.resume, "params.json")
+    else:
+        param_path = os.path.join(save_dir, 'params.json')
+
+    #logger.info("[*] MODEL dir: %s" % args.resume)
+    #logger.info("[*] PARAM path: %s" % param_path)
+
+    with open(param_path, 'w') as fp:
+        json.dump(args.__dict__, fp, indent=4, sort_keys=True)
+
 
 
 # vim: ts=4 sw=4 sts=4 expandtab
