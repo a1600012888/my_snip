@@ -2,6 +2,7 @@
 import torch
 import numpy as np
 import os
+import math
 class TrainClock(object):
     def __init__(self):
         self.epoch = 0
@@ -30,6 +31,9 @@ class AvgMeter(object):
         self.num = 0
         self.now = 0
     def update(self, mean_var, count = 1):
+        if math.isnan(mean_var):
+            mean_var = 1e6
+            print('Nan!')
         self.now = mean_var
         self.num += count
 
