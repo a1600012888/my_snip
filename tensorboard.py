@@ -34,3 +34,11 @@ class TensorBoard(object):
     def add_scalar(self, tag, value, step):
         summary= Summary(value=[Summary.Value(tag=tag, simple_value=value)])
         self.summary_writer.add_summary(summary, global_step=step)
+
+
+def write_tb_scalar(tb_writer, names, values, steps):
+    assert len(names) == len(values), "tensorboard write helper wrong!"
+    assert len(steps) == len(values), "tensorboard write helper wrong!"
+
+    for n, v, s in zip(names, values, steps):
+        tb_writer.add_scalar(n, v, s)
