@@ -227,11 +227,11 @@ def random_crop(img, shape):
 def rotate(image, angle):
 
     rotate_angel = (random.random() / 180 * np.pi) * angel
-	# Create Afine transform
-	afine_tf = transform.AffineTransform(rotation=rotate_angel)
+    # Create Afine transform
+    #
+    afine_tf = transform.AffineTransform(rotation=rotate_angel)
+    # Apply transform to image data
+    image = transform.warp(image, inverse_map=afine_tf, mode='edge')
 
-	# Apply transform to image data
-	image = transform.warp(image, inverse_map=afine_tf, mode='edge')
-
-	return image
+    return image
 # vim: ts=4 sw=4 sts=4 expandtab

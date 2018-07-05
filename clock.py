@@ -33,55 +33,12 @@ class AvgMeter(object):
     def update(self, mean_var, count = 1):
         if math.isnan(mean_var):
             mean_var = 1e6
-            print('Nan!')
+            print('Avgmeter getting Nan!')
         self.now = mean_var
         self.num += count
 
         self.sum += mean_var * count
         self.mean = float(self.sum) / self.num
 
-class TorchCheckpoint(object):
 
-    def __init__(self, base_path = './data/', high = True):
-        assert os.path.isdir(base_path)
-
-        self.high = high
-        self.best_epoch = 0
-        self.best = 0
-        self.base_path = base_path
-        self.best_path = os.path.join(base_path, 'best.pt')
-        self.metrics = []
-
-        print('checkpoint initialized!!')
-
-    def __call__(self, state_dict, metric, epoch):
-
-        self.metrics.append(metric)
-
-        now_path = os.path.join(self.base_path, 'exp-{}.pt'.format(epoch))
-
-        torch.save(state_dict, now_path)
-        print('Model with metric as {} saved in {}!'.format(metric, now_path))
-        is_best = False
-        if self.high:
-            best = max(self.metrics)
-
-            if metric >= best:
-                is_best = True
-                self.best_epoch = epoch
-
-        else:
-            best = min(self.metrics)
-
-            if metric <= best:
-                is_best = True
-                self.best_epoch = epoch
-        self.best = best
-
-        if is_best:
-            torch.save(state_dict, self.best_path)
-
-        print('Best model after epoch{}, metric as: {} saved in {}. '.format(self.best_epoch, best, self.best_path))
-
-        return is_best
 # vim: ts=4 sw=4 sts=4 expandtab

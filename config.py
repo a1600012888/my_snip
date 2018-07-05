@@ -70,4 +70,9 @@ def save_args(args, save_dir = None):
 
 
 
+def dump_dict(json_file_path, dic):
+    with open(json_file_path, 'a') as f:
+        f.write('\n')
+        json.dump(dic, f)
+
 # vim: ts=4 sw=4 sts=4 expandtab
